@@ -1,0 +1,54 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx,color,longtable,booktabs,xspace,hyperref,xparse}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=2.0cm]{geometry}
+\NewDocumentCommand{\code}{v}{
+    \texttt{\textcolor{teal}{#1}}
+}
+\usepackage[margin=30pt, font=sf]{caption}
+\usepackage[english]{babel}
+
+\begin{document}
+
+\title{
+Understanding the Road Accident in UK
+}
+\author{Yushi Yang}
+\maketitle
+
+\section{Introduction}
+
+Road accidents, unfortunately, happened frequently and they can lead to severe consequences such as fatality. Reducing the number of road accidents, especially the severe ones, is especially important to make people's lives better. Appreciating the inherent randomness of these events, I am trying to understand the deterministic factors in these tragic incidents. For instance, one might intuitively speculate the conditions of the vehicles being relevant, and the drivers with poorly conditioned cars might be more likely to get involved in accidents.
+
+In order to concretely understand what factors might be important, I am going to use statistical methods to find the correlations between different attributes of the car accidents, and then I will try to build a probabilistic model (i.e. machine learning model) to predict the severity of the car accidents, basing on the highly correlated factors. The final model is expected to help the law makers to propose more effective regulations to reduce the number of severe road accidents.
+
+\section{Data Processing}
+
+\subsection{Data Source}
+
+I used the data from website kaggle (\href{https://www.kaggle.com/tsiaras/uk-road-safety-accidents-and-vehicles?select=Accident_Information.csv}{link to the source}), which contains the detailed information about traffic accidents across the country from 2004 to 2016. 
+The dataset contains two tables (\code{.csv} files). One of them is related to the accidents alone and another is related to the conditions of the involved vehicles. The same entry in the two tables is identified by its unique accident ID.
+
+There are 55 features in total for each accidental event, such as \code{Number_of_Casualties}, \code{Carriageway_Hazards}, and \code{Vehicle_Manoeuvre}. There are totally 1,793,224  records in these dataset, and the file size of the entire dataset is about 1GB. 
+
+\subsection{Data Cleaning}
+
+The data were stored as standard \code{.csv} format which makes the data cleaning procedure very easy. One can simple use the python library \code{Pandas} to load the two tables with the help of \code{read_csv} function. The missing values were represented in different fashions, such as ``Data missing or out of range'', ``None'', and ``Other''. I manually identified all these tokens and replaced them with value \code{NaN}.
+
+A na\"{i}ve way to process the missing values is simplying discarding the entires that contains missing values. But there exists some features (columns) whose values were missing for most entries (rows). Therefore I have to do something clever, otherwise I will drop more than 95\% of the cases. Practically, I identified the features, whose \code{NaN} values occupied more than 10\% of the entire dataset. I then discarded 
+
+\subsection{Data Processing}
+
+The label to be predicted is the \code{Accident_Severity}, which is categorised into 3 classes \code{Fatal}, \code{Serious} and \code{Slight}. Since there are \emph{orders} in these categories (\code{Fatal} $>$ \code{Serious} $>$ \code{Slight}) so it is possible to convert them into numerical numbers, and study the correlations between features and the result. The very relevant features will be used to build the model, and the model is expected to be able to predict the accident severities.
+
+\section{Understand the data}
+
+\subsection{Correlation analysis}
+
+\subsection{Exploring the Structure}
+
+\section{Modelling the Data}
+
+\section{Conclusion}
+
+\end{document}
